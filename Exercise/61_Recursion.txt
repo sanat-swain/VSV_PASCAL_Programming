@@ -1,0 +1,39 @@
+Recursion Example: Factorial
+
+Factorial is a mathematical computation which for instance, 
+the factorial of n is the multiplation of n * n-1 * n-2 * ... * 0. 
+In factorial, multiplying by 0 results in 1, ie. factorial(0) = 1.
+
+Let us now see how we do it iteratively (the ordinary way):
+
+Function Factorial(n : Integer) : LongInt;
+Var
+	Result : LongInt;
+	i : Integer;
+
+Begin
+	Result := n;
+	If (n <= 1) Then
+		Result := 1
+	Else
+	For i := n-1 DownTo 1 do
+		Result := Result * i;
+	Factorial := Result;
+End;
+
+This is the iterative way. Now open your eyes and watch how we do it the recursive way:
+
+Function Factorial(n : Integer) : Integer;
+Var
+	Result : Integer;
+Begin
+	If n = 1 Then
+		Factorial := 1
+	Else
+		Factorial := n*Factorial(n-1);
+End;
+
+As you can see, the difference is in the number of lines for both functions to perform the
+same operation. Recursion takes much less code but is harder to write and even more overall
+system resources (i.e. requires sufficient stack memory to operate appropriately) than
+iterations do. Iterations are easier to code.

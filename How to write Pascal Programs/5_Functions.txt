@@ -1,0 +1,37 @@
+(*Functions provide a flexible method to apply one formula many times to possibly different values. They are comparable to procedures but
+
+	functions are of always of a certain type
+	functions usually have one or more input variable(s)
+	the function name must appear at least once inside the definition
+The general form of the function statement looks like this:
+
+FUNCTION FunctionName(VariableName: VariableType): VariableType;
+BEGIN
+    some code, if necessary;
+    FunctionName := some computation;
+    more code if necessary;
+END;
+Note that every function must contain the function name at least twice: once in the definition of the function, and once to assign the result of a computation to the function. Functions can be used similar to variables. You can assign the result of a function to a new variable, you can print the result of a function using WRITE or WRITELN, or you can use the result of a function in another computation or test. Here is an example:*)
+
+PROGRAM Test;
+VAR
+   radius: REAL;
+
+FUNCTION CircleArea(r : REAL): REAL;
+BEGIN
+    CircleArea := 3.1415 * r * r;
+END;
+
+BEGIN
+    WRITE('Area of circle with radius 2.0: ');
+    WRITELN(CircleArea(2.0):6:1);
+    WRITE('Area of circle with radius 5.0: ');
+    WRITELN(CircleArea(5.0):6:1);
+    WRITE('Enter your own radius: ');
+    READLN(radius);
+    WRITE('Area of circle with radius ', radius:3:1,': ');
+    WRITELN(CircleArea(radius));   { ugly - formatting missing for real }
+    radius := 5.0;
+    radius := CircleArea(radius);
+    WRITELN(radius);               { can you guess the output ? }
+END.

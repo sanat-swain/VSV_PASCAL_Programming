@@ -1,0 +1,117 @@
+PROGRAM A_Basic_Program;
+{****************************************}
+{* Programmer: Bert G. Wachsmuth        *}
+{* Date:       Sept. 28, 1995           *}  { The beginning of the program. Note that the name of the programmer  }
+{*                                      *}  { and the date when the program was finished are part of the comments.}
+{* This program converts degree Celcius *}  { Also, a brief description of the program is given.                  }
+{* to and from degree Fahrenheit. The   *}
+{* user can choose the conversion from  *}
+{* a menu.                              *} 
+{****************************************}
+
+VAR
+   UserChoice : CHAR; { menu choice }       { The list of variables. There are two real variables, one for the user's} 
+   UserInput  : REAL; { number to convert}  { input number and one for the converted number. Even if more conversion }
+   Answer     : REAL; { converted answer }  { formulas are added later, only two variables are needed.               }
+{****************************************}
+PROCEDURE ShowTheMenu;
+{ This procedure shows the available     }
+{ options to the user of the program.    }
+BEGIN
+     WRITELN;
+     WRITELN('     A Basic Program');        { The menu that the user will see. Note the blank line produced by the }
+     WRITELN('     ---------------');        { WRITELN at the top and bottom, as well as the spacing in front to    }
+     WRITELN(' a) Celcius to Fahrenheit');   { move the text to the middle of the screen.                           }
+     WRITELN(' b) Fahrenheit to Celcius');
+     WRITELN;
+     WRITELN(' x) To exit the program');
+     WRITELN;
+END;
+{****************************************}
+PROCEDURE GetUserChoice;
+{ This procedure asks the user for their }  { This procedure asks the user for their choice and stores the result in       }
+{ choice and stores the result in        }  { the variable UserChoice. Note that by using WRITE instead of WRITELN         }
+{ UserMenuChoice.      }		    { the user's input will appear in the same line as the prompt. Also, the       }
+BEGIN					    { empty space after the prompt will align this letter with the next user input.}
+    WRITE('Enter your choice:       ');
+    READLN(UserChoice);
+END;
+{****************************************}
+PROCEDURE GetNumberToConvert;
+{ Asks the user for the number to be     }  { This procedure asks for the number to convert. Again, using WRITE instead of }
+{ converted                              }  { WRITELN will make the user's number appear in the same line as the prompt.   }
+BEGIN					    { The number will be stored in the variable UserInput                          }
+   WRITE('Enter number to convert: ');
+   READLN(UserInput);
+END;
+{****************************************}
+PROCEDURE Wait;
+{ Holds execution until user presses     }  { A READLN without a variable will wait until the user hits the RETURN key. }
+{ RETURN                                 }  { The keystroke is not stored in any variable.                              }
+BEGIN
+    WRITE('Press RETURN to continue ...');
+    READLN;
+END;
+{****************************************}
+FUNCTION ToFahrenheit(x: REAL): REAL;
+{ Function to convert degrees Celcius to }  { This functions converts its input x to degree Fahrenheit. The result of the        }
+{ degree Fahrenheit.                     }  { computation can be used by any other procedure or function, or by the main program.}
+BEGIN
+     ToFahrenheit := 9/5 * x + 32;
+END;
+{****************************************}
+FUNCTION ToCelcius(x: REAL): REAL;
+{ Function to convert degrees Fahrenheit }  { This functions converts its input x to degree Celcius. The result of the computation }
+{ to degree Celcius.                     }  { can be used by any other procedure or function, or by the main program.              }
+BEGIN
+     ToCelcius := 5/9 * (x - 32);
+END;
+{****************************************}
+PROCEDURE DoTheConversion;
+{ This procedure converts the number     }
+{ contained in UserInput to the degree   }  { This procedure selects the appropriate conversion function depending on the  }
+{ according to the user's menu choice.   }  { content of the variable UserChoice. In any case, the result of the conversion} 
+BEGIN					    { is stored in the variable answer						   }
+     IF (UserChoice = 'a') THEN
+        answer := ToFahrenheit(UserInput);
+     IF (UserChoice = 'b') THEN
+        answer := ToCelcius(UserInput);
+END;
+{****************************************}
+PROCEDURE DisplayTheAnswer;
+{ This procedure displays the answer in  }  { This procedure displays the answer. It is probably the smartest procedure }
+{ a nice numerical format. It switches   }  { of the whole program. Can you see exactly what it does, and why it is     }
+{ the title of the table displaying the  }  { considered a smart procedure ?						}
+{ answer depending on the user's menu    }
+{ choice.                                }
+BEGIN
+     WRITELN;
+     WRITELN('        Degree');
+     IF (UserChoice = 'a') THEN
+        WRITELN('Celcius    | Fahrenheit');
+     IF (UserChoice = 'b') THEN
+        WRITELN('FahrenHeit |   Celcius');
+     WRITELN('------------------------');
+     WRITE(UserInput:8:2);
+     WRITE('   |   ');
+     WRITE(Answer:8:2);
+     WRITELN;
+     WRITELN;
+END;
+{****************************************}
+BEGIN					    { The main execution block, or main program. It consists of a simple loop that      }
+   UserChoice := 'q';			    { executes unless the variable UserChoice contains the character x. However,        }
+   WHILE (UserChoice <> 'x') DO		    { the user is asked for the first time inside the loop, thus the variable UserChoice} 
+      BEGIN				    { must be initialized by hand before the loop can start. If a user enters x then    }
+         ShowTheMenu;			    { many procedures are not needed and are therefore blocked inside the IF statement. }
+         GetUserChoice;			    { Note that the IF statement uses the logical operator OR. Why did we not use the 	}
+         IF (UserChoice = 'a') OR	    { appearently easier form IF (UserChoice <> 'x') THEN ?                             }
+            (UserChoice = 'b') THEN
+           BEGIN
+              GetNumberToConvert;
+              DoTheConversion;
+              DisplayTheAnswer;
+              Wait;
+           END;
+      END;
+END.

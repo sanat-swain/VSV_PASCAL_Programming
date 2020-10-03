@@ -1,0 +1,21 @@
+(* The Bubble Sort algorithm is simple, inefficient sorting algorithm. 
+It is not recommended for use, since its performance at sorting a list 
+of items is terribly slow. It is best at sorting a small list of items, 
+but not for large ones.
+
+The sorting time complexity of the Bubble Sort is O(n^2). *)
+
+Procedure BubbleSort(numbers : Array of Integer; size : Integer);
+Var
+	i, j, temp : Integer;
+
+Begin
+	For i := size-1 DownTo 1 do
+		For j := 2 to i do
+			If (numbers[j-1] > numbers[j]) Then
+			Begin
+				temp := numbers[j-1];
+				numbers[j-1] := numbers[j];
+				numbers[j] := temp;
+			End;
+End.

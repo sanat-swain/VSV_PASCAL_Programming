@@ -1,0 +1,29 @@
+(* Insertion Sort algorithm is a bit more efficient sorting algorithm 
+than Bubble Sort. As it name implies, the insertion sort algorithm 
+inserts an unsorted item in an already sorted item list. This makes 
+you think of the use of two seperated arrays - one unsorted and the 
+other sorted. However, to save space one uses the same array and uses 
+a pointer to separate the sorted and unsorted elements of the list.
+
+The sorting time complexity of the Insertion Sort is O(n^2). Although 
+this exactly the same to Bubble Sort's, the Insertion Sort algorithm 
+is twice more efficient, yet inefficient for large lists. *)
+
+Procedure InsertionSort(numbers : Array of Integer; size : Integer);
+Var
+	i, j, index : Integer;
+
+Begin
+	For i := 2 to size-1 do
+	Begin
+		index := numbers[i];
+		j := i;
+		While ((j > 1) AND (numbers[j-1] > index)) do
+		Begin
+			numbers[j] := numbers[j-1];
+			j := j - 1;
+		End;
+		numbers[j] := index;
+	End;
+End.
+
